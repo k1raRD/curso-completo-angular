@@ -1,0 +1,60 @@
+<h2>Reactive: <small>Dinamicos</small></h2>
+<hr>
+
+<form autocomplete="off" (ngSubmit)="guardar()" [formGroup]="miFormulario">
+
+    <!-- Nombre -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+            <input class="form-control" type="text" formControlName="nombre" name="nombre"
+                placeholder="Nombre de la persona" required>
+            <span class="form-text text-danger" *ngIf="campoEsValido('nombre')">Este campo es obligatorio</span>
+        </div>
+    </div>
+
+    <!-- Agregar favorito -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input class="form-control" [formControl]="nuevoFavorito" type="text" name="nuevoJuego" placeholder="Agregar favorito" (keyup.enter)="agregarFavorito()">
+                <button class="btn btn-outline-primary" type="button" (click)="agregarFavorito()">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de juegos Favoritos -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favoritos</label>
+        <div class="col-sm-9" formArrayName="favoritos" >
+
+            <div class="input-group mb-2" *ngFor="let favorito of favoritosArr.controls; let i = index">
+                <input  required
+                        class="form-control" [formControlName]="i">
+                <button class="btn btn-outline-danger" type="button" (click)="borrarFavorito(i)">Eliminar</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-sm-12">
+            <button class="btn btn-primary float-end" type="submit">
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>
+
+
+<span>Valid</span>
+<pre>{{miFormulario.valid}}</pre>
+<br>
+
+
+<span>Value</span>
+<pre>{{miFormulario.value | json}}</pre>
+
+<span>Agregar Juego</span>
+<pre>{{nuevoFavorito.valid }}</pre>
